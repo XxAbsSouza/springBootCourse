@@ -17,11 +17,12 @@ public class DemoController {
        System.out.println("In constructor: " + getClass().getSimpleName());
 
        myCoach=theCoach;
-   }
 
+   }
 
     @GetMapping("/dailyworkout")
     public String getDailyWorkout(){
         return myCoach.getDailyWorkout();
     }
+
 }
