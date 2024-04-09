@@ -18,6 +18,7 @@ public class StudentDAOImpl implements  StudentDAO{
     public StudentDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
     @Override
     @Transactional
     public void save(Student theStudent) {
@@ -54,7 +55,30 @@ public class StudentDAOImpl implements  StudentDAO{
         return theQuery.getResultList();
     }
 
-    //inject entity manager using constructor injection
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        //retrieve the student
+        Student theStudent = entityManager.find(Student.class, id);
+
+        //delete the student
+        entityManager.remove(theStudent);
+    }
+
+    @Override
+    @Transactional
+    public int deleteAll() {
+        int numRowDeleted = entityManager.createQuery("Delete from Student").executeUpdate();
+        return numRowDeleted;
+    }
+
+
 }
 
 
