@@ -63,8 +63,15 @@ public class StudentRestController {
     //add another exception handler to catch any error
 
     @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse>handlerException(Exception exc){
+    public ResponseEntity<StudentErrorResponse>handlerException(Exception exc){        //create a studenterrorresponse
+        StudentErrorResponse error = new StudentErrorResponse();
 
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        //return responseentity
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 
