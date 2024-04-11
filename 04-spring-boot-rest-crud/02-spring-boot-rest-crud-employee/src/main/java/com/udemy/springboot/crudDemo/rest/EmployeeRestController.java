@@ -1,9 +1,7 @@
 package com.udemy.springboot.crudDemo.rest;
 
-import com.udemy.springboot.crudDemo.dao.EmployeeDAO;
 import com.udemy.springboot.crudDemo.entity.Employee;
 import com.udemy.springboot.crudDemo.service.EmployeeService;
-import com.udemy.springboot.crudDemo.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +41,27 @@ public class EmployeeRestController {
         Employee dbEmployee = employeeService.save(employee);
 
         return dbEmployee;
+    }
+
+    //update---------
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee){
+        Employee dbEmployee = employeeService.save(employee);
+
+        return dbEmployee;
+    }
+
+    //delete employee by id
+    @DeleteMapping("/employee/{employeeId}")
+    public String deleteEmployee(@PathVariable int employeeId){
+        Employee tempEmployee = employeeService.findById(employeeId);
+
+        if (tempEmployee==null){
+            throw new RuntimeException("Employee id not found - " + employeeId);
+        }
+
+        employeeService.deleteById(employeeId);
+
+        return "Deleted employee id - " + employeeId;
     }
 }
