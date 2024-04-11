@@ -37,8 +37,11 @@ public class EmployeeRestController {
     }
 
     //add mapping for post /employess - add new employee
-    @PostMapping("/employees/{employeeId}")
+    @PostMapping("/employees")
     public  Employee addEmployee(@RequestBody Employee employee){
-        //
+        employee.setId(0);
+        Employee dbEmployee = employeeService.save(employee);
+
+        return dbEmployee;
     }
 }
