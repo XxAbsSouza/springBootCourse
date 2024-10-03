@@ -84,12 +84,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.sql.DataSource;
 
 @Configuration
-public class DemoSecurityConfig {
+public class DemoSecurityConfig{
 
 
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        // Create a JdbcUserDetailsManager instance
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        // Configure JdbcUserDetailsManager (e.g., set table names)
+        userDetailsManager.setUsersByUsernameQuery("SELECT user_id, pw, active FROM members WHERE user_id=?");
+        userDetailsManager.setAuthoritiesByUsernameQuery("SELECT user_id, role FROM roles WHERE user_id=?");
+
+        return userDetailsManager;
     }
 
     @Bean
